@@ -48,20 +48,20 @@ def pieChart():
 
     return jsonify(sorted_pie_plot)
 
-# @app.route('/line', methods=['GET'])
-# def lineChart():
-#     filtered_df = final_df[(final_df['Make'] == 'TESLA') & (final_df['ModelYear'].astype(int) <= 2020)]
-#
-#     # Create a list of dictionaries from the filtered DataFrame
-#     data_dict = []
-#     for index, row in filtered_df.iterrows():
-#         row_dict = {
-#             'ModelYear': int(row['ModelYear']),
-#             'ElectricRange': int(row['ElectricRange'])
-#         }
-#         data_dict.append(row_dict)
-#
-#     return jsonify(data_dict)
+@app.route('/line', methods=['GET'])
+def lineChart():
+    filtered_df = final_df[(final_df['Make'] == 'TESLA') & (final_df['ModelYear'].astype(int) <= 2020)]
+
+    # Create a list of dictionaries from the filtered DataFrame
+    data_dict = []
+    for index, row in filtered_df.iterrows():
+        row_dict = {
+            'ModelYear': int(row['ModelYear']),
+            'ElectricRange': int(row['ElectricRange'])
+        }
+        data_dict.append(row_dict)
+
+    return jsonify(data_dict)
 
 
 if __name__ == "__main__":
