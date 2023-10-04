@@ -3,32 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <title>Interactive Charts</title>
-    <!-- Include Plotly.js library -->
+    <!-- Include Plotly.js library for the bar and pie charts -->
     <script src="https://cdn.plot.ly/plotly-2.26.0.min.js" charset="utf-8"></script>
 </head>
 <body>
-    <h1>Bar Chart</h1>
+    <h1>What are the top models by Electric Range?</h1>
     <div id="barChart"></div>
 
-    <h1>Pie Chart</h1>
+    <h1>When people choose electric, do they choose hybrid or fully EV?</h1>
     <div id="pieChart"></div>
 
-<!--        <h1>Line Chart</h1>-->
-<!--    <div id="lineChart"></div>-->
+    <!-- Line Chart addition -->
+    <h1>How has electric range increased in Teslas?</h1>
+    <select id="modelSelector">
+    <option value="MODEL 3">MODEL 3</option>
+    <option value="MODEL S">MODEL S</option>
+    <option value="MODEL X">MODEL X</option>
+</select>
+<div id="lineChartContainer">
+    <canvas id="lineChart" width="400" height="200"></canvas>
+</div>
 
-<!--    <h2>Select Model:</h2>-->
-<!--    <select id="modelDropdown">-->
-<!--        &lt;!&ndash; Add options for Tesla models &ndash;&gt;-->
-<!--        <option value="MODEL 3">MODEL 3</option>-->
-<!--        <option value="MODEL Y">MODEL Y</option>-->
-<!--        &lt;!&ndash; Add more options for other Tesla models as needed &ndash;&gt;-->
-<!--    </select>-->
-<div id='map' class='choropleth'>
-    <h3>Number of Electric Car by County</h3>
-    </div>
+<!-- Dropdown menu to select the car model -->
 
-<script src="https://d3js.org/d3.v7.min.js"></script>
-<script src = 'static/script.js'></script>
+    <!-- Line Chart Addition -->
+
+    <!-- Include D3.js library for data retrieval -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <!-- Include Chart.js library for the line chart -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Include your custom JavaScript file -->
+    <script src="static/script.js"></script>
 </body>
 </html>
-

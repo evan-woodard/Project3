@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Interactive Charts</title>
+    <!-- Include Plotly.js library for the bar and pie charts -->
+    <script src="https://cdn.plot.ly/plotly-2.26.0.min.js" charset="utf-8"></script>
+</head>
+<body>
+    <h1>Bar Chart</h1>
+    <div id="barChart"></div>
+
+    <h1>Pie Chart</h1>
+    <div id="pieChart"></div>
+
+    <!-- Line Chart addition -->
+    <h1>Line Chart</h1>
+    <div id="lineChartContainer">
+        <canvas id="lineChart" width="400" height="200"></canvas>
+    </div>
+    <!-- Line Chart Addition -->
+
+    <!-- Include D3.js library for data retrieval -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <!-- Include Chart.js library for the line chart -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Include your custom JavaScript file -->
+    <script src="static/script.js"></script>
+</body>
+</html>
+
+// Function to create the bar chart
+function createBarChart() {
+    d3.json("/bar").then((data) => {
+        var modelNames = data.map(function(item) { return item.Model; });
+        var electricRanges = data.map(function(item) { return item.ElectricRange; });
+
+        var trace = {
+            x: electricRanges,
+            y: modelNames,
+            type: 'bar',
+            orientation: 'h'
+        };
+
+        var layout = {
+            title: 'Bar Chart - Electric Range by Model',
+            xaxis: { title: 'Electric Range' },
+            yaxis: { title: 'Model' }
+        };
+
+        var barData = [trace];
+
+        Plotly.newPlot('barChart', barData, layout);
+    });
+}
+
+// Function to create the pie chart
+function createPieChart() {
+    d3.json("/pie").then((data) => {
+        var labels = Object.keys(data);
+        var values = Object.values(data);
+
+        var trace = {
+            values: values,
+            labels: labels,
+            type: 'pie'
+        };
+
+        var layout = {
+            title: 'Pie Chart - Electric Range Distribution'
+        };
+
+        var pieData = [trace];
+
+        // Create the pie chart in the 'pieChart' div
+        Plotly.newPlot('pieChart', pieData, layout);
+    });
+}
+
+// Function to create the line chart
+// Function to create the line chart
+function createLineChart() {
+    var ctx = document.getElementById("lineChart").getContext("2d");
+
+    var lineChart = new Chart(ctx, {
+        type: "line",
+        data: {
+            // Labels are the years, which should be the same for all models
+            labels: ["2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020"],
+            datasets: [
+                {
+                    label: "MODEL 3",
+                    data: [null, null, null, null, null, 220, 215, 220, 295],
+                    borderColor: "red",
+                    fill: false
+                },
+                {
+                    label: "MODEL S",
+                    data: [265, 208, 208, 208, 210, 210, 249, 270, 331],
+                    borderColor: "green",
+                    fill: false
+                },
+                {
+                    label: "MODEL X",
+                    data: [null, null, null, null, 200, 200, 238, 289, 291],
+                    borderColor: "blue",
+                    fill: false
+                },
+                {
+                    label: "MODEL Y",
+                    data: [null, null, null, null, null, null, null, null, 291],
+                    borderColor: "yellow",
+                    fill: false
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            title: {
+                display: true,
+                text: "Line Chart - Electric Range by Model"
+            }
+        }
+    });
+}
+
+// Call all three functions to create the charts
+createBarChart();
+createPieChart();
+createLineChart();

@@ -50,18 +50,33 @@ def pieChart():
 
 @app.route('/line', methods=['GET'])
 def lineChart():
+    data_dict = {}  # Initialize as an empty dictionary
+
     filtered_df = final_df[(final_df['Make'] == 'TESLA') & (final_df['ModelYear'].astype(int) <= 2020)]
 
-    # Create a list of dictionaries from the filtered DataFrame
-    data_dict = []
+    # Calculate average electric range for each model by year
     for index, row in filtered_df.iterrows():
-        row_dict = {
-            'ModelYear': int(row['ModelYear']),
-            'ElectricRange': int(row['ElectricRange'])
-        }
-        data_dict.append(row_dict)
+        model_year = int(row['ModelYear'])
+        electric_range = int(row['ElectricRange'])
+        model = row['Model']
 
-    return jsonify(data_dict)
+        if model not in data_dict:
+            data_dict[model] = {}
+
+        if model_year not in data_dict[model]:
+            data_dict[model][model_year] = []
+
+        data_dict[model][model_year].append(electric_range)
+
+    # Calculate the average electric range for each model by year
+    avg_data_dict = {}
+    for model, years_data in data_dict.items():
+        avg_data_dict[model] = {}
+        for year, electric_ranges in years_data.items():
+            avg_data_dict[model][year] = int(sum(electric_ranges) / len(electric_ranges))
+
+    return jsonify(avg_data_dict)
+
 
 
 if __name__ == "__main__":
