@@ -1,38 +1,124 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="UTF-8">
     <title>Interactive Charts</title>
-    <!-- Include Plotly.js library for the bar and pie charts -->
+
     <script src="https://cdn.plot.ly/plotly-2.26.0.min.js" charset="utf-8"></script>
+    <link rel="stylesheet" type="text/css" href="static/styles.css">
 </head>
 <body>
+<h1>Car Count by County in Washington State - 2,300 Cars Total</h1>
+<div id="anychart-embed-usa-states-washington" class="anychart-embed anychart-embed-usa-states-washington">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.3.15/proj4.js"></script>
+    <script src="https://cdn.anychart.com/releases/v8/js/anychart-base.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/v8/js/anychart-map.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/v8/js/anychart-exports.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/v8/js/anychart-ui.min.js"></script>
+    <script src="https://cdn.anychart.com/geodata/2.2.0/usa_states/washington/washington.js"></script>
+    <div id="ac_style_usa-states-washington" style="display:none;">
+    html, body, #container {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        align: center;
+    }
+    </div>
+    <script>(function(){
+    function ac_add_to_head(el){
+        var head = document.getElementsByTagName('head')[0];
+        head.insertBefore(el,head.firstChild);
+    }
+    function ac_add_link(url){
+        var el = document.createElement('link');
+        el.rel='stylesheet';el.type='text/css';el.media='all';el.href=url;
+        ac_add_to_head(el);
+    }
+    function ac_add_style(css){
+        var ac_style = document.createElement('style');
+        if (ac_style.styleSheet) ac_style.styleSheet.cssText = css;
+        else ac_style.appendChild(document.createTextNode(css));
+        ac_add_to_head(ac_style);
+    }
+    ac_add_link('https://cdn.anychart.com/releases/v8/css/anychart-ui.min.css');
+    ac_add_style(document.getElementById("ac_style_usa-states-washington").innerHTML);
+    ac_add_style(".anychart-embed-usa-states-washington{width:600px;height:450px;}");
+    })();</script>
+    <div id="container">
+    </div>
+    <script>
+    anychart.onDocumentReady(function() {
+      // create map
+      var map = anychart.map();
+      // create data set
+      var dataSet = anychart.data.set(
+          [
+                {"id":"US.WA.075","value":2},  //whitman  2 cars
+                {"id":"US.WA.065","value":3},  // stevens  3 cars
+                {"id":"US.WA.063","value":4},  // spokane  4 cars
+                {"id":"US.WA.025","value":2}, //grant   2 cars
+                {"id":"US.WA.077","value":26},  //yakima  26 cars
+                {"id":"US.WA.011","value":164},  //clark   164 cars
+                {"id":"US.WA.015","value":16},  //cowlitz   16 cars
+                {"id":"US.WA.037","value":6},   //kittitas 6 cars
+                {"id":"US.WA.033","value":1668},   //king      1668 cars
+                {"id":"US.WA.053","value":5},  /// pierce     5 cars
+                {"id":"US.WA.067","value":83}, // thurston   83 cars
+                {"id":"US.WA.007","value":5}, // chelan    5 cars
+                {"id":"US.WA.017","value":1},  // Douglas    1 car
+                {"id":"US.WA.035","value":105},  //  kipsap   105 cars
+                {"id":"US.WA.031","value":25},  //jefferson    25 cars
+                {"id":"US.WA.057","value":6}, //skagit  6 cars
+                {"id":"US.WA.061","value":169},  //snohomish     169 cars
+                {"id":"US.WA.029","value":20}  //island   20 cars
+          ]
+      );
+      // create choropleth series
+      series = map.choropleth(dataSet);
+      // set geoIdField to 'id', this field contains in geo data meta properties
+      series.geoIdField('id');
+
+      // set map color settings
+      series.colorScale(anychart.scales.linearColor('#FFEBD6', '#e82217'));
+      series.hovered().fill('#ADDD8E');
+
+      // https://cdn.anychart.com/#maps-collection
+      map.geoData(anychart.maps['washington']);
+
+      //set map container id (div)
+      map.container('container');
+
+      //initiate map drawing
+      map.draw();
+    });
+    </script>
+    </div>
+
     <h1>What are the top models by Electric Range?</h1>
     <div id="barChart"></div>
 
     <h1>When people choose electric, do they choose hybrid or fully EV?</h1>
     <div id="pieChart"></div>
 
-    <!-- Line Chart addition -->
     <h1>How has electric range increased in Teslas?</h1>
+    <p>Pick a Tesla Model!</p>
     <select id="modelSelector">
     <option value="MODEL 3">MODEL 3</option>
     <option value="MODEL S">MODEL S</option>
     <option value="MODEL X">MODEL X</option>
 </select>
 <div id="lineChartContainer">
-    <canvas id="lineChart" width="400" height="200"></canvas>
+    <canvas id="lineChart" width="400" height="400"></canvas>
 </div>
-
-<!-- Dropdown menu to select the car model -->
-
-    <!-- Line Chart Addition -->
-
-    <!-- Include D3.js library for data retrieval -->
     <script src="https://d3js.org/d3.v7.min.js"></script>
-    <!-- Include Chart.js library for the line chart -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Include your custom JavaScript file -->
     <script src="static/script.js"></script>
+    <script src="https://cdn.anychart.com/releases/8.10.0/js/anychart-bundle.min.js"></script>
+<br>
+<br>
+<br>
+<br>
 </body>
 </html>

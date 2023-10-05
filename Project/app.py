@@ -15,9 +15,6 @@ bev_df['ElectricRange'] = bev_df['ElectricRange'].astype(int)
 # Filter the DataFrame to remove rows with ElectricRange == 0
 final_df = bev_df[bev_df['ElectricRange'] != 0]
 
-# Calculate the mean directly on 'final_df' and reset the index
-bar_df = final_df.groupby(['Model'])['ElectricRange'].mean().reset_index()
-
 app = Flask(__name__)
 app.static_folder = 'static'  # Set the static folder
 app.template_folder = 'templates'  # Set the templates folder
@@ -38,8 +35,8 @@ def barChart():
 
 @app.route('/pie', methods=['GET'])
 def pieChart():
-    bins = [0, 100, 150, 200, 250, np.inf]
-    labels = ['<100', '101-150', '151-200', '201-250', '251+']
+    bins = [0, 150, 200, 250, np.inf]
+    labels = ['<150', '151-200', '201-250', '251+']
 
     final_df['RangeCategory'] = pd.cut(final_df['ElectricRange'], bins=bins, labels=labels)
     range_counts = final_df['RangeCategory'].value_counts()
@@ -52,7 +49,7 @@ def pieChart():
 def lineChart():
     data_dict = {}  # Initialize as an empty dictionary
 
-    filtered_df = final_df[(final_df['Make'] == 'TESLA') & (final_df['ModelYear'].astype(int) <= 2020)]
+    filtered_df = final_df[(final_df['Make'] == 'TESLA') & (final_df['ModelYear'].astype(int) >= 2014) & (final_df['ModelYear'].astype(int) <= 2020)]
 
     # Calculate average electric range for each model by year
     for index, row in filtered_df.iterrows():
