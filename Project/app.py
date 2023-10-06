@@ -9,15 +9,15 @@ columned_df = pd.read_sql_query("SELECT County, ModelYear, Make, Model, Electric
 
 bev_df = columned_df[columned_df['ElectricVehicleType'] == 'Battery Electric Vehicle (BEV)']
 
-# Convert 'ElectricRange' to integers directly when creating bev_df
+# Convert 'ElectricRange' to integers
 bev_df['ElectricRange'] = bev_df['ElectricRange'].astype(int)
 
-# Filter the DataFrame to remove rows with ElectricRange == 0
+# Remove rows with ElectricRange == 0
 final_df = bev_df[bev_df['ElectricRange'] != 0]
 
 app = Flask(__name__)
-app.static_folder = 'static'  # Set the static folder
-app.template_folder = 'templates'  # Set the templates folder
+app.static_folder = 'static'
+app.template_folder = 'templates'
 
 @app.route("/")
 def home():
@@ -47,7 +47,7 @@ def pieChart():
 
 @app.route('/line', methods=['GET'])
 def lineChart():
-    data_dict = {}  # Initialize as an empty dictionary
+    data_dict = {}
 
     filtered_df = final_df[(final_df['Make'] == 'TESLA') & (final_df['ModelYear'].astype(int) >= 2014) & (final_df['ModelYear'].astype(int) <= 2020)]
 

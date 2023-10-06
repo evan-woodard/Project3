@@ -58,7 +58,7 @@ function createLineChart(selectedModel) {
         var electricRanges = Object.values(selectedModelData);
 
         if (lineChart) {
-            // If the line chart already exists, update its data
+            // If the line chart already exists, update
             lineChart.data.labels = labels;
             lineChart.data.datasets[0].data = electricRanges;
             lineChart.options.title.text = "Line Chart - Electric Range by " + selectedModel;
@@ -77,39 +77,40 @@ function createLineChart(selectedModel) {
                             fill: false
                         }
                     ]
-                },
+                    },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
                     title: {
                         display: true,
                         text: "Line Chart - Electric Range by " + selectedModel
-                    }
+                            }
+                         }
+                                        });
                 }
-            });
-        }
         // Update the chart title
         lineChart.options.title.text = "Line Chart - Electric Range by " + selectedModel;
         // Update the chart
         lineChart.update();
-    });
+                                    });
 }
 
-// Initial chart creation (default to "MODEL 3")
+// Initial chart creation
 var lineChart;
+// Default chart to "Model 3"
 createLineChart("MODEL 3");
 
-// Event listener for changes in the dropdown menu
+// Event listener for dropdown
 document.getElementById("modelSelector").addEventListener("change", function() {
-    // Get the selected car model from the dropdown menu
+    // Get model from the dropdown menu
     var selectedModel = document.getElementById("modelSelector").value;
 
-    // Create or update the line chart with the selected model
+    // Create/update the line chart with the model
     createLineChart(selectedModel);
 
 });
 
-// Call all three functions to create the charts
+// Call functions to create the charts
 createBarChart();
 createPieChart();
 createLineChart();
